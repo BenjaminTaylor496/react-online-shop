@@ -1,0 +1,48 @@
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+	visibility: hidden; //Скрываем сам блок
+	opacity: 0; //Делаем его прозрачным
+	overflow: hidden;
+	//Код снизу делает анимацию:
+	transition: visibility 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+.overlayVisible {
+	visibility: visible; //Когда захотим отобразить, то visibility сделать visible
+	opacity: 1; // opacity cделать 1
+
+	/**Если overlayVisible есть, тогда drawer будет не transform: translateX(100%) f-a:*/
+	.drawer {
+		transform: translateX(0);
+	}
+}
+//Вот до сюда это анимация
+.drawer {
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	width: 420px;
+	height: 100%;
+	right: 0;
+	background: #ffffff;
+	box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	transform: translateX(100%);
+	transition: transform 0.3s ease-out;
+
+	.items {
+		flex: 1;
+		overflow: auto;
+		margin-bottom: 40px;
+	}
+
+	h3 {
+		margin: 0;
+	}
+}
