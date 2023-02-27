@@ -19,7 +19,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 
 	const onClickOrder = async () => {
 		/**Данная функция создана для того, чтобы при нажатии на кнопку состояние setIsOrderCompleted изменилось с false на true
-		 * И я могу вызвать ее где угодно в тегах <button> и в пределах данного файла
+		 * И я могу вызвать ее где угодно в тегах <button> или в пределах данного файла
 		 */
 		try {
 			setIsLoading(true); /**Перед отправкой запроса, сделай setIsLoading true */
@@ -31,15 +31,16 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 			 * И в useState, который находится на 32 строке очисти корзину*/
 			setOrderId(data.id);
 			/**Здесь передается весь массив cartItems на сервер mockAPI.
-			 * И после того как передал объект, параллельно этому делаю, что заказ сформирован
-			 * И очищаю массив корзины. Если коротко, то сначала отправляю, а потом очищаю*/
+			 * И после того как передал объект, параллельно этому скажи, что заказ сформирован
+			 * И очищай массив корзины. Если коротко, то сначала отправляй, а потом очищай*/
 			setIsOrderCompleted(true);
 			setCartItems([]);
 
 			for (let i = 0; i < cartItems.length; i++) {
-				/**!!!!!! ЭТО "КОСТЫЛЬ" И ТАК ДЕЛАТЬ НЕ РЕКОМЕНДУЕТСЯ! 
-			Так как в mockAPI нету метода, который мог бы удалять элемент и заменять его, пришлось написать "КОСТЫЛЬ"*/
-				//В данном цикле отправляю запрос, после чего жду 1 секунду. И так далее, пока все элементы не удалятся. Задержка нужна для того, чтобы mockAPI не блокировал
+				/**!!!!!! ЭТО "КОСТЫЛЬ" И ТАК ДЕЛАТЬ НЕ РЕКОМЕНДУЕТСЯ!
+				 * Так как в mockAPI нету метода, который мог бы удалять элемент и заменять его, пришлось написать "КОСТЫЛЬ"
+				 * В данном цикле отправляй запрос, после чего жди 1 секунду. И так далее, пока все элементы не удалятся.
+				 * Задержка нужна для того, чтобы mockAPI не блокировал */
 				const item = cartItems[i];
 				await axios.delete('https://63d2bc1b06556a0fdd436605.mockapi.io/cart/' + item.id);
 				await delay(1000);
@@ -53,7 +54,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 
 	return (
 		<div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
-			{/**Делаю скрытой корзину, вместо того, чтобы каждый раз удалять её */}
+			{/**Cделай скрытой корзину, вместо того, чтобы каждый раз удалять её */}
 			<div className={styles.drawer}>
 				<h2 className='d-flex justify-between mb-30'>
 					Cart
@@ -68,10 +69,9 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 				</h2>
 
 				{items.length > 0 ? (
-					/**Здесь сказал, items.length больше нуля? Если да, то выведи мне всю информацию о товаре
+					/**ЛОГИКА: items.length больше нуля? Если да, то выведи мне всю информацию о товаре
 					 * А если items.length <= 0, то тогда, возьми из файла Info.jsx все данные которые находятся в переменной Info,
-					 * И вместо пропсов "title, image и description" поставь то, что я передам
-					 */
+					 * И вместо пропсов "title, image и description" поставь то, что я передам*/
 					<div className='d-flex flex-column flex'>
 						<div className='items flex'>
 							{items.map(obj => (
@@ -108,7 +108,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 								</li>
 							</ul>
 							<button disabled={isLoading} onClick={onClickOrder} className='greenButton'>
-								{/**Здесь вызвал функцию, где изменил состояние useState с false на true */}
+								{/**Здесь вызвается функция, где изменяется состояние useState с false на true */}
 								Checkout
 								<img className='justify-between' src='/img/symbols/arrow.svg' alt='arrow' />
 							</button>
@@ -117,7 +117,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 				) : (
 					<Info
 						title={isOrderCompleted ? 'Order is processed' : 'Cart is Empty'}
-						/**Теперь, здесь говорю: "Нажали на кнопку "оформить заказ"? Если да, то напиши это 'Order is processed', а если нет, то'Cart is Empty'" */
+						/**Здесь логика такова: "Нажали на кнопку "оформить заказ"? Если да, то напиши это 'Order is processed', а если нет, то'Cart is Empty'" */
 						descrition={
 							/**Тут все точно так же как и в title */
 							isOrderCompleted

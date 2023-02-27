@@ -102,6 +102,9 @@ header {
 		& :hover {
 			img {
 				transform: translateX(5px);
+				right: 30px;
+				right: 20px;
+				transition: transform 0.15s ease-in-out;
 			}
 		}
 
